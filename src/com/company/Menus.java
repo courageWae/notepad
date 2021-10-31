@@ -1,16 +1,23 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.text.View;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Menus {
 
-    // Menu items;
+    public static JMenu fileMenu;
+    public static JMenu editMenu;
+    public static JMenu helpMenu;
+    public static JMenu formatMenu;
+    public static JMenu viewMenu;
 
     public static JMenu fileMenu()
     {
         String [] menuItems = {"New", "New Window", "Open...", "Save", "Save As...", "Print", "Exit"};
-        JMenu fileMenu = new JMenu("File");
+        fileMenu = new JMenu("File");
 
         for(String menuItem : menuItems)
         {
@@ -22,7 +29,7 @@ public class Menus {
     public static JMenu editMenu()
     {
         String [] menuItems = {"Undo", "Cut", "Copy", "Past", "Delete", "Search with Google", "Find", "Find Next", "Find Previous", "Replace", "Select All", "Date/Time"};
-        JMenu editMenu = new JMenu("Edit");
+        editMenu = new JMenu("Edit");
         for(String menuItem : menuItems)
         {
             editMenu.add(new JMenuItem(menuItem));
@@ -32,7 +39,7 @@ public class Menus {
 
     public static JMenu formatMenu()
     {
-        JMenu formatMenu = new JMenu("Format");
+        formatMenu = new JMenu("Format");
         JMenuItem WordWrap = new JMenuItem(new ImageIcon("C:/Users/cahorttor/Desktop/check.png"));
         WordWrap.setText("Word Wrap");
         JMenuItem Font = new JMenuItem("Font");
@@ -53,13 +60,29 @@ public class Menus {
         Zoom.add(ZoomIn);
         Zoom.add(ZoomOut);
 
-        JMenu viewMenu = new JMenu("View");
-        JMenuItem StatusBar = new JMenuItem("Status Bar");
+        viewMenu = new JMenu("View");
+        JMenuItem StatusBar = new JMenuItem(new ImageIcon("C:/Users/cahorttor/Desktop/check.png"));
+        StatusBar.setText("Status Bar");
 
         viewMenu.add(Zoom);
         viewMenu.add(StatusBar);
 
         return viewMenu;
+    }
+
+    public static JMenu helpMenu()
+    {
+        helpMenu = new JMenu("Help");
+        JMenuItem ViewHelp = new JMenuItem("View Help");
+        JMenuItem SendFeedback = new JMenuItem("Send Feedback");
+        JMenuItem AboutChalkBoard = new JMenuItem("About ChalkBoard");
+
+        helpMenu.add(ViewHelp);
+        helpMenu.add(SendFeedback);
+        helpMenu.add(AboutChalkBoard);
+
+
+        return helpMenu;
     }
 
 }

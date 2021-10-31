@@ -3,12 +3,15 @@ import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+
 import com.company.Menus;
+import com.company.FileMenuEvent;
 
 public class MainFrame extends JFrame {
 
     private static JMenuBar menuBar;
-    private static JTextArea textArea;
+    public static JTextArea textArea;
     private static JPanel footerPanel;
 
     MainFrame()
@@ -19,6 +22,8 @@ public class MainFrame extends JFrame {
         getContentPane().add(BorderLayout.SOUTH, footerPanel());
 
         setSize(1250, 870);
+
+        new FileMenuEvent();
 
         setVisible(true);
 
@@ -41,6 +46,7 @@ public class MainFrame extends JFrame {
         menuBar.add(Menus.editMenu());
         menuBar.add(Menus.formatMenu());
         menuBar.add(Menus.viewMenu());
+        menuBar.add(Menus.helpMenu());
         return menuBar;
     }
 
