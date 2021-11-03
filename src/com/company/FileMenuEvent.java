@@ -1,8 +1,12 @@
 package com.company;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.Buffer;
+import java.rmi.activation.ActivationInstantiator;
+
 import com.company.Menus;
 import com.company.MainFrame;
 import javax.swing.*;
@@ -19,24 +23,26 @@ public class FileMenuEvent
 
     FileMenuEvent()
     {
-        this.New= Menus.fileMenu.getItem(0);
-        this.newWindow = Menus.fileMenu.getItem(1);
-        this.open = Menus.fileMenu.getItem(2);
-        this.save = Menus.fileMenu.getItem(3);
-        this.saveAs = Menus.fileMenu.getItem(4);
-        this.print = Menus.fileMenu.getItem(5);
-        this.print = Menus.fileMenu.getItem(6);
+        New= Menus.fileMenu.getItem(0);
+        newWindow = Menus.fileMenu.getItem(1);
+        open = Menus.fileMenu.getItem(2);
+        save = Menus.fileMenu.getItem(3);
+        saveAs = Menus.fileMenu.getItem(4);
+        print = Menus.fileMenu.getItem(5);
+        exit = Menus.fileMenu.getItem(6);
 
         assignListeners();
     }
 
     public void assignListeners()
     {
-        this.New.addActionListener(new New());
-        this.newWindow.addActionListener(new NewWindow());
-        this.open.addActionListener(new Open());
-        this.save.addActionListener(new Save());
-        this.saveAs.addActionListener(new SaveAs());
+        New.addActionListener(new New());
+        newWindow.addActionListener(new NewWindow());
+        open.addActionListener(new Open());
+        save.addActionListener(new Save());
+        saveAs.addActionListener(new SaveAs());
+        print.addActionListener(new Print());
+        exit.addActionListener(new Exit());
     }
 
     /*
@@ -73,30 +79,33 @@ public class FileMenuEvent
 
     class Open implements ActionListener
     {
+        private File file ;
+        private JFileChooser fileChooser;
+
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
-            JFileChooser fileChooser = new JFileChooser();
+            this.fileChooser = new JFileChooser();
             String intialString, stringToDisplay = "" ;
-            if(fileChooser.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION)
+
+            if(this.fileChooser.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION)
             {
-                String pathToFile = fileChooser.getSelectedFile().getPath();
+                this.file = this.fileChooser.getSelectedFile();
+                String pathToFile = this.file.getPath();
                 try
                 {
                     BufferedReader reader = new BufferedReader(new FileReader(pathToFile));
-
                     while( (intialString = reader.readLine()) != null)
                        stringToDisplay += intialString + "\n" ;
 
                     MainFrame.textArea.setText(stringToDisplay);
+
                     reader.close();
                 }
                 catch(Exception exception)
                 {
                     exception.printStackTrace();
                 }
-
-
             }
         }
 
@@ -107,10 +116,8 @@ public class FileMenuEvent
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
-            JFileChooser saveFile = new JFileChooser();
-            saveFile.showSaveDialog(new JFrame());
-            String text = MainFrame.textArea.getText();
-            //if(!text.equals(""))
+            if(! MainFrame.textArea.getText().equals(""))
+                fileSave();
         }
     }
 
@@ -119,7 +126,39 @@ public class FileMenuEvent
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
+            if(! MainFrame.textArea.getText().equals(""))
+                fileSave();
+        }
+    }
 
+    class Print implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            File file = new File("default.txt");
+            try
+            {
+                Desktop desktop = Desktop.getDesktop();
+                BufferedWriter writer= new BufferedWriter(new FileWriter(file));
+                writer.write(MainFrame.textArea.getText());
+
+                desktop.print(file);
+                writer.close();
+            }
+            catch (Exception e)
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "Sorry the file cannot be found.");
+            }
+        }
+    }
+
+    class Exit implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            System.exit(0);
         }
     }
 
@@ -133,12 +172,11 @@ public class FileMenuEvent
         {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(MainFrame.textArea.getText());
-
             writer.close();
         }
         catch(Exception exception)
         {
-            JOptionPane.showMessageDialog(new JFrame(), "The file can not be save. Try again");
+            JOptionPane.showMessageDialog(new JFrame(), "The file can not be saved. Try again");
         }
     }
 

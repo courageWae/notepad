@@ -3,6 +3,7 @@ import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.peer.FramePeer;
 import java.io.File;
 
 import com.company.Menus;
@@ -12,11 +13,12 @@ public class MainFrame extends JFrame {
 
     private static JMenuBar menuBar;
     public static JTextArea textArea;
-    private static JPanel footerPanel;
+    public static JPanel footerPanel;
+    public static String title = "Untitled -Chalkboard";
 
     MainFrame()
     {
-        frameSettings();
+        frameSettings(title);
         setJMenuBar(menuBar());
         getContentPane().add(BorderLayout.CENTER, textArea());
         getContentPane().add(BorderLayout.SOUTH, footerPanel());
@@ -30,16 +32,16 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void frameSettings()
+    public void frameSettings( String title)
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle("chalkBoard By Courage W. Ahorttor");
+        setTitle(title);
     }
+
 
     private static JMenuBar menuBar()
     {
-
         menuBar = new JMenuBar();
         menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         menuBar.add(Menus.fileMenu());
