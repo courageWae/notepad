@@ -9,7 +9,7 @@ public class UndoHandler implements UndoableEditListener
     public void undoableEditHappened(UndoableEditEvent undoableEditEvent)
     {
         UndoAndRedo.undoManager.addEdit(undoableEditEvent.getEdit());
-        UndoAndRedo.undoAction.update();
-        UndoAndRedo.redoAction.update();
+        UndoAndRedo.Undo.update();
+        UndoAndRedo.Redo.update();
     }
 }

@@ -1,13 +1,7 @@
 package com.company;
-import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.peer.FramePeer;
-import java.io.File;
-
-import com.company.Menus;
-import com.company.FileMenuEvent;
 
 public class MainFrame extends JFrame {
 
@@ -26,7 +20,7 @@ public class MainFrame extends JFrame {
         setSize(1250, 870);
 
         new FileMenuEvent();
-
+        new EditMenuEvent();
         setVisible(true);
 
     }

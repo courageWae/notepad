@@ -26,7 +26,7 @@ public class UndoAction extends AbstractAction
             //ex.printStackTrace();
         }
         update();
-        UndoAndRedo.redoAction.update();
+        UndoAndRedo.Redo.update();
     }
 
     protected void update()
