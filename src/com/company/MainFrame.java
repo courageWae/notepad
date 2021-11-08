@@ -6,7 +6,7 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     private static JMenuBar menuBar;
-    public static JTextArea textArea;
+    public static JEditorPane textArea;
     public static JPanel footerPanel;
     public static String title = "Untitled -Chalkboard";
 
@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
 
     private static JScrollPane textArea()
     {
-        textArea = new JTextArea();
+        textArea = new JEditorPane();
         JScrollPane scroller = new JScrollPane(textArea);
         textArea.requestFocus();
         //textArea.setLineWrap(true);
