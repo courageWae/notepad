@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Date;
 import java.util.StringTokenizer;
 import javax.swing.text.*;
 
@@ -53,7 +54,8 @@ public class EditMenuEvent
         search_with_google.addActionListener(new Search_with_Google());
         find.addActionListener(new Find());
         replace.addActionListener(new Replace());
-        select_all.addActionListener(new Select_All());
+        select_all.addActionListener(new SelectAll());
+        date_time.addActionListener(new DateAndTime());
     }
 
     class Undo implements ActionListener
@@ -252,13 +254,36 @@ public class EditMenuEvent
 
     }
 
-    class Select_All implements ActionListener
+    class SelectAll implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
             int numberOfWords = MainFrame.textArea.getText().length();
+            Highlighter highlighter = MainFrame.textArea.getHighlighter();
 
+            try
+            {
+                highlighter.addHighlight(0, numberOfWords, DefaultHighlighter.DefaultPainter);
+            }
+            catch (BadLocationException exception)
+            {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    class DateAndTime implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            String text =  MainFrame.textArea.getText();
+            Date date = new Date();
+            String newText = text + date.toString();
+
+            MainFrame.textArea.setText(newText);
 
         }
 
