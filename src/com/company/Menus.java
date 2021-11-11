@@ -24,7 +24,7 @@ public class Menus {
 
     public static JMenu editMenu()
     {
-        String [] menuItems = {"Undo", "Cut", "Copy", "Paste", "Delete", "Search with Google", "Find", "Find Next", "Find Previous", "Replace", "Select All", "Date/Time"};
+        String [] menuItems = {"Undo", "Cut", "Copy", "Paste", "Delete", "Search with Google", "Find", "Replace", "Select All", "Date/Time"};
         editMenu = new JMenu("Edit");
         for(String menuItem : menuItems)
         {

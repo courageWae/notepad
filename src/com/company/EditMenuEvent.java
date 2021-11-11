@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.StringTokenizer;
+import javax.swing.text.*;
 
 import static com.sun.org.apache.xml.internal.resolver.Catalog.URI;
 
@@ -21,9 +23,7 @@ public class EditMenuEvent
     public static JMenuItem delete;
     public static JMenuItem search_with_google;
     public static JMenuItem find;
-    public static JMenuItem find_Next;
-    public static JMenuItem find_previous;
-    public static JMenuItem Replace;
+    public static JMenuItem replace;
     public static JMenuItem select_all;
     public static JMenuItem date_time;
 
@@ -36,11 +36,9 @@ public class EditMenuEvent
         delete = Menus.editMenu.getItem(4);
         search_with_google = Menus.editMenu.getItem(5);
         find = Menus.editMenu.getItem(6);
-        find_Next = Menus.editMenu.getItem(7);
-        find_previous = Menus.editMenu.getItem(8);
-        Replace = Menus.editMenu.getItem(9);
-        select_all = Menus.editMenu.getItem(10);
-        date_time = Menus.editMenu.getItem(11);
+        replace = Menus.editMenu.getItem(7);
+        select_all = Menus.editMenu.getItem(8);
+        date_time = Menus.editMenu.getItem(9);
 
         assignListeners();
     }
@@ -54,6 +52,8 @@ public class EditMenuEvent
         delete.addActionListener(new Delete());
         search_with_google.addActionListener(new Search_with_Google());
         find.addActionListener(new Find());
+        replace.addActionListener(new Replace());
+        select_all.addActionListener(new Select_All());
     }
 
     class Undo implements ActionListener
@@ -187,14 +187,86 @@ public class EditMenuEvent
             mainText = MainFrame.textArea.getText();
             wordToFind = JOptionPane.showInputDialog("Word to find");
 
-            DefaultHighlighter highLighter = new DefaultHighlighter();
+            // Creating a highlighter.
+            Highlighter  highlighter = MainFrame.textArea.getHighlighter();
 
-            String newText = mainText.replace(wordToFind, wordToFind.);
-            MainFrame.textArea.setText(newText);
+            // Tokenize the strings into words
+            StringTokenizer newText = new StringTokenizer(mainText);
+            int lengthOfSearchWord = wordToFind.length();
+            while(newText.hasMoreTokens())
+            {
+                int indexOfSearchWord = mainText.indexOf(wordToFind);
+                int endOfSearchWord =  indexOfSearchWord + lengthOfSearchWord;
+
+                String tok = newText.nextToken();
+                if(tok.equals(wordToFind))
+                {
+                    try
+                    {
+                        highlighter.addHighlight(indexOfSearchWord, endOfSearchWord, DefaultHighlighter.DefaultPainter);
+                    }
+                    catch (BadLocationException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+    }
+
+    class Replace implements ActionListener
+    {
+        private JTextField find ;
+        private JTextField replace ;
+        private JPanel myPanel;
+        private String wordToFind;
+        private String wordToReplace;
+
+        Replace()
+        {
+            myPanel = new JPanel();
+            find = new JTextField(5);
+            replace = new JTextField(5);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            myPanel.add(new JLabel("Find :"));
+            myPanel.add(find);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Replace :"));
+            myPanel.add(replace);
+
+            int result = JOptionPane.showConfirmDialog(new JFrame(), myPanel, "Enter words to find and replace", JOptionPane.OK_CANCEL_OPTION);
+            if(result == JOptionPane.OK_OPTION)
+            {
+                wordToFind = find.getText();
+                wordToReplace = replace.getText();
+
+                String newText = MainFrame.textArea.getText().replace(wordToFind,wordToReplace);
+                MainFrame.textArea.setText(newText);
+            }
+        }
+
+    }
+
+    class Select_All implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            int numberOfWords = MainFrame.textArea.getText().length();
+
 
         }
 
     }
+
+
+
+
 
 
 
