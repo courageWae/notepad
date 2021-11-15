@@ -6,31 +6,35 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     private static JMenuBar menuBar;
-    public static JEditorPane textArea;
+    public static JTextArea textArea;
+    public static int textAreaFontSize;
+    public static Font textAreaFont;
     public static JPanel footerPanel;
     public static String title = "Untitled -Chalkboard";
 
     MainFrame()
     {
-        frameSettings(title);
+        textAreaFontSize = 20;
+        frameSettings();
         setJMenuBar(menuBar());
         getContentPane().add(BorderLayout.CENTER, textArea());
         getContentPane().add(BorderLayout.SOUTH, footerPanel());
 
         setSize(1250, 870);
-
         new FileMenuEvent();
         new EditMenuEvent();
-        setVisible(true);
+        new FormatMenuEvent();
+        new ViewMenuEvent();
 
+        setVisible(true);
     }
 
 
-    public void frameSettings( String title)
+    public void frameSettings()
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle(title);
+        setTitle("Untitled -Chalkboard");
     }
 
 
@@ -48,10 +52,11 @@ public class MainFrame extends JFrame {
 
     private static JScrollPane textArea()
     {
-        textArea = new JEditorPane();
+        textAreaFont = new Font("arial", Font.PLAIN, textAreaFontSize);
+        textArea = new JTextArea();
         JScrollPane scroller = new JScrollPane(textArea);
         textArea.requestFocus();
-        //textArea.setLineWrap(true);
+        textArea.setFont(textAreaFont);
         scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         return scroller;
@@ -62,9 +67,5 @@ public class MainFrame extends JFrame {
         footerPanel = new JPanel();
         return footerPanel;
     }
-
-
-
-
 
 }
