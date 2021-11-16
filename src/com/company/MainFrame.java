@@ -1,10 +1,11 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class MainFrame extends JFrame {
 
@@ -72,7 +73,8 @@ public class MainFrame extends JFrame {
 
         MatteBorder border = new MatteBorder(0, 1, 0, 0, Color.gray);
 
-        JLabel lineAndColumn = new JLabel("   Ln Col            ");
+        String textString = "   Ln "+ countColumnsAndLines()[0]+", " +"Col " + countColumnsAndLines()[1]+" ";
+        JLabel lineAndColumn = new JLabel(textString);
         JLabel fontCode = new JLabel("   UTF-8   ");
         JLabel percentage = new JLabel("   120%   ");
         JLabel win = new JLabel("   Windows (CRLF)   ");
@@ -97,26 +99,15 @@ public class MainFrame extends JFrame {
         return footerPanel;
     }
 
-    class FooterPanel implements KeyListener
+
+    private static int[] countColumnsAndLines()
     {
-        @Override
-        public void keyTyped(KeyEvent keyEvent)
-        {
-            int columns = MainFrame.textArea.getText().length() + 1;
-            int lines = MainFrame.textArea.getLineCount();
+        int columns = MainFrame.textArea.getText().length() + 1;
+        int lines = MainFrame.textArea.getLineCount();
+        int [] columnsAndLines = {lines, columns};
 
-            String textString = "   Ln"+columns+" Col "+lines+"            ";
+        return columnsAndLines;
 
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent keyEvent)
-        {}
-
-        @Override
-        public void keyReleased(KeyEvent keyEvent)
-        {}
     }
 
 
