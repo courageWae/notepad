@@ -259,17 +259,22 @@ public class EditMenuEvent
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
-            int numberOfWords = MainFrame.textArea.getText().length();
-            Highlighter highlighter = MainFrame.textArea.getHighlighter();
+            /*
+              The code works, however, there is an inbuilt function for this.
+             */
 
-            try
-            {
-                highlighter.addHighlight(0, numberOfWords, DefaultHighlighter.DefaultPainter);
-            }
-            catch (BadLocationException exception)
-            {
-                exception.printStackTrace();
-            }
+//            int numberOfWords = MainFrame.textArea.getText().length();
+//            Highlighter highlighter = MainFrame.textArea.getHighlighter();
+//
+//            try
+//            {
+//                highlighter.addHighlight(0, numberOfWords, DefaultHighlighter.DefaultPainter);
+//            }
+//            catch (BadLocationException exception)
+//            {
+//                exception.printStackTrace();
+//            }
+            MainFrame.textArea.selectAll();
         }
     }
 

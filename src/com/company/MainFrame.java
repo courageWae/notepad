@@ -1,7 +1,10 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MainFrame extends JFrame {
 
@@ -65,7 +68,60 @@ public class MainFrame extends JFrame {
     private static JPanel footerPanel()
     {
         footerPanel = new JPanel();
+        Font font = new Font("arial", Font.PLAIN, 17);
+
+        MatteBorder border = new MatteBorder(0, 1, 0, 0, Color.gray);
+
+        JLabel lineAndColumn = new JLabel("   Ln Col            ");
+        JLabel fontCode = new JLabel("   UTF-8   ");
+        JLabel percentage = new JLabel("   120%   ");
+        JLabel win = new JLabel("   Windows (CRLF)   ");
+
+        lineAndColumn.setFont(font);
+        lineAndColumn.setBorder(border);
+
+        fontCode.setFont(font);
+        fontCode.setBorder(border);
+
+        percentage.setFont(font);
+        percentage.setBorder(border);
+
+        win.setFont(font);
+        win.setBorder(border);
+
+        footerPanel.add(lineAndColumn);
+        footerPanel.add(percentage);
+        footerPanel.add(win);
+        footerPanel.add(fontCode);
+
         return footerPanel;
     }
+
+    class FooterPanel implements KeyListener
+    {
+        @Override
+        public void keyTyped(KeyEvent keyEvent)
+        {
+            int columns = MainFrame.textArea.getText().length() + 1;
+            int lines = MainFrame.textArea.getLineCount();
+
+            String textString = "   Ln"+columns+" Col "+lines+"            ";
+
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent keyEvent)
+        {}
+
+        @Override
+        public void keyReleased(KeyEvent keyEvent)
+        {}
+    }
+
+
+
+
+
 
 }
